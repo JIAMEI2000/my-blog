@@ -29,7 +29,7 @@ class BlogPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog-post.create');
     }
 
     /**
@@ -40,7 +40,15 @@ class BlogPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        BlogPost::create(
+           [
+            "title" => $request->input('title'),
+            "body" => $request->input('body'),
+            "user_id" => 4,
+           ]
+           );
+
+           return redirect(route('blog-post.index'));
     }
 
     /**
@@ -51,7 +59,17 @@ class BlogPostController extends Controller
      */
     public function show($id)
     {
-        //
+        $blogPost = BlogPost::find($id);
+        $calc = 45;
+        return view('blog-post.show',[
+            "blogPost" => $blogPost,
+            "answer" => $calc
+        ]); //square bracket is to pass data to show.blade.php
+
+
+        // return view('blog-post.show',[
+        //      "blogPosts" => $id
+        //      ]);
     }
 
     /**
@@ -62,7 +80,10 @@ class BlogPostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $blogPost = BlogPost::find($id);
+        return view('blog-post.edit',[
+            "blogPost" => $blogPost,
+        ]);
     }
 
     /**
